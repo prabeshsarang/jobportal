@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employer Dashboard</title>
+<style>
+/* General Reset and Base Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  color: #800000;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar Styling */
+nav {
+  position: sticky;
+  top: 0;
+  background: #800000;
+  width: 100%;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+nav .title {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+nav .register-btn {
+  padding: 0.5rem 1.2rem;
+  background: #a52a2a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background 0.3s ease;
+  margin-left: auto;
+}
+
+nav .register-btn:hover {
+  background: #b84c4c;
+}
+
+/* Page Title */
+h1 {
+  margin-top: 2.5rem;
+  color: #800000;
+  font-size: 2.4rem;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* Section Title */
+h2 {
+  color: #a52a2a;
+  font-size: 2rem;
+  margin: 2rem 0 1rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Form Container for Registered Companies */
+.company-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 0 2rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Individual Company Card Form */
+.company-card {
+  background-color: #f4f7fc;
+  border-radius: 12px;
+  padding: 2rem;
+  width: calc(33% - 1rem);
+  min-width: 280px;
+  max-width: 350px;
+  box-shadow: 0px 8px 16px rgba(128, 0, 0, 0.15);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.company-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(128, 0, 0, 0.3);
+}
+
+/* Company Card Title */
+.company-card h3 {
+  color: #800000;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/* Form Fields in the Company Card */
+.company-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  justify-content: center;
+}
+
+.company-card label {
+  color: #a52a2a;
+  font-size: 1.1rem;
+  text-align: left;
+}
+
+.company-card input,
+.company-card select {
+  padding: 0.75rem;
+  font-size: 1rem;
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #800000;
+  transition: all 0.3s ease;
+}
+
+.company-card input:focus,
+.company-card select:focus {
+  border-color: #b84c4c;
+  outline: none;
+}
+
+/* Action Button */
+.company-card button {
+  padding: 0.75rem 1.5rem;
+  margin-top: 1rem;
+  background: #800000;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  transition: background 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.company-card button:hover {
+  background: #a52a2a;
+  transform: translateY(-5px);
+}
+
+/* "No Companies" Message */
+.no-companies {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #800000;
+  margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .company-card {
+    width: calc(50% - 1rem);
+  }
+
+  .company-card input,
+  .company-card select,
+  .company-card button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .company-card {
+    width: 100%;
+  }
+}
+
+/* Logout Link Styling */
+.logout {
+  padding: 0.75rem 1.5rem;
+  background-color: #c82333;
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  display: inline-block;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.logout:hover {
+  background-color: #bd2130;
+  transform: translateY(-3px);
+}
+
+.logout:active {
+  transform: translateY(1px);
+}
+</style>
+
+
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="nav">Employer Dashboard
+            
+          
+        </div>
+        <a href="/company/register" class="register-btn">Register New Company</a>
+        <a href="/logout" class="logout">Logout</a>
+    </nav>
+
+    <!-- Page Title -->
+    <h1>Employer's Dashboard</h1>
+<br>
+    <!-- Registered Companies Section -->
+    <h2>Registered Companies</h2>
+    <br>
+    <div class="company-grid">
+        <% if (companies && companies.length > 0) { %>
+            <% companies.forEach(company => { %>
+                <div class="company-card">
+                    <h3><%= company.companyName %></h3>
+                    <p><strong>Address:</strong> <%= company.address %></p>
+                    <p><strong>Contact Info:</strong> <%= company.contactInfo %></p>
+                    <a href="/company/<%= company.companyId %>/jobs">Create/Manage Jobs</a>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p class="no-companies">No companies registered yet.</p>
+        <% } %>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 Next Step Workforce Solutions. All rights reserved.
+    </footer>
+
+</body>
+</html>

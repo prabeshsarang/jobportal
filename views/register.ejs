@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+/* -------------------------
+   Global Styles
+------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: #0b1d3a;
+    color: #0b1d3a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+}
+
+/* -------------------------
+   Navbar
+------------------------- */
+nav {
+    width: 100%;
+    padding: 15px 30px;
+    background: linear-gradient(to right, #0b1d3a, #1f3b69);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+nav h1 {
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #ffd700;
+}
+
+/* -------------------------
+   Registration Form Container
+------------------------- */
+.registration-form {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    margin-top: 100px;
+}
+
+h2 {
+    text-align: center;
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* -------------------------
+   Input Fields
+------------------------- */
+.input-group {
+    position: relative;
+    margin: 15px 0;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select,
+input[type="file"] {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    font-size: 16px;
+    outline: none;
+    transition: background 0.3s ease-in-out;
+}
+
+input::placeholder {
+    color: #f0f0f0;
+    opacity: 0.8;
+}
+
+input:focus {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+select {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+/* -------------------------
+   Checkbox Label
+------------------------- */
+.checkbox-label {
+    font-size: 14px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* -------------------------
+   Submit Button
+------------------------- */
+button {
+    background: linear-gradient(135deg, #1f3b69, #0b1d3a);
+    color: #fff;
+    padding: 12px;
+    border: none;
+    width: 100%;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #0b1d3a, #1f3b69);
+}
+
+/* Glowing effect */
+.button-glow {
+    animation: glow 1.5s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
+    }
+}
+
+/* -------------------------
+   Bottom Link
+------------------------- */
+.link {
+    display: block;
+    margin-top: 10px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    text-align: center;
+}
+
+.link:hover {
+    color: #cbdfff;
+}
+
+/* Responsive Adjustment */
+@media (max-width: 480px) {
+    .registration-form {
+        padding: 30px 20px;
+    }
+
+    nav h1 {
+        font-size: 1.4rem;
+    }
+}
+</style>
+
+</head>
+<body>
+    <div class="registration-form button-glow">
+        <h2>Registration Form</h2>
+        <form action="/auth/register" method="POST" enctype="multipart/form-data">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="email" name="email" placeholder="Email address" required>
+            
+           
+            <input type="password" name="password" placeholder="Password" required>
+            <select name="role" required>
+                <option value="">Select Role</option>
+                <option value="JobSeeker">JobSeeker</option>
+                <option value="Employer">Employer</option>
+                <option value="Admin">Admin</option>
+            </select>
+            <input type="file" name="validDocument" >
+            <div class="checkbox-label">
+                <input type="checkbox" name="terms" required>
+                <span>Agree to terms and conditions</span>
+            </div>
+            <button type="submit">Create Account</button>
+        </form>
+        <a href="/login" class="link">Already have an account? Sign in</a>
+    </div>
+</body>
+</html>

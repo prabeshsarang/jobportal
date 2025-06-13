@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jobseeker Dashboard</title>
+<style>
+/* ------------------------------
+   Global Styles
+------------------------------ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body, html {
+    height: 100%;
+    background-color: #fdf4f4;
+    color: #800000;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ------------------------------
+   Navbar Styles
+------------------------------ */
+.navbar {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #800000, #990000);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.navbar h2 {
+    color: #ffffff;
+    font-size: 1.8rem;
+}
+
+.navbar a {
+    color: #ffffff;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.navbar a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.logout {
+    color: #fff;
+    background-color: #b30000;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.logout:hover {
+    background-color: #8b0000;
+}
+
+/* ------------------------------
+   Main Content Styles
+------------------------------ */
+.main-content {
+    flex: 1;
+    padding: 2rem;
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    overflow-y: auto;
+}
+
+.main-content h1 {
+    font-size: 2rem;
+    color: #800000;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* ------------------------------
+   Section Styles
+------------------------------ */
+.section {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(128, 0, 0, 0.1);
+}
+
+.section h2 {
+    font-size: 1.5rem;
+    color: #800000;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #b22222;
+    padding-bottom: 0.5rem;
+}
+
+.section p {
+    font-size: 1rem;
+    color: #5a0000;
+    line-height: 1.5;
+}
+
+/* ------------------------------
+   Job List Styles
+------------------------------ */
+.job-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.job-item {
+    background-color: #fff0f0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 6px rgba(128, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+}
+
+.job-item:hover {
+    transform: translateY(-5px);
+}
+
+.job-item h3 {
+    font-size: 1.2rem;
+    color: #800000;
+    margin-bottom: 0.5rem;
+}
+
+.job-item p {
+    font-size: 0.95rem;
+    color: #660000;
+    margin-bottom: 0.5rem;
+}
+
+.job-item button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #990000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.job-item button:hover {
+    background-color: #800000;
+}
+
+/* ------------------------------
+   Application Status Styles
+------------------------------ */
+.Pending {
+    background-color: #ffcc80;
+    color: #800000;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.Approved {
+    background-color: #990000;
+    color: #fff;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.Rejected {
+    background-color: #dc3545;
+    color: #fff;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* ------------------------------
+   Responsive Design
+------------------------------ */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .main-content {
+        margin-top: 100px;
+        padding: 1rem;
+    }
+
+    .job-item {
+        padding: 1rem;
+    }
+}
+</style>
+
+
+</head>
+<body>
+<div class ="container">
+
+  <!-- Sidebar -->
+  <div class="navbar">
+    <h2>Dashboard</h2>
+    <a href="#job-listings">Job Listings</a>
+    <a href="#applications">My Applications</a>
+    <a href="/logout" class="logout">Logout</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    
+    <!-- Header -->
+    <h1>Welcome to Your Dashboard</h1>
+
+    <!-- Job Listings Section -->
+    <div id="job-listings" class="section">
+      <h2>Job Listings</h2>
+      <div class="job-list">
+        <% jobs.forEach(job => { %>
+          <div class="job-item">
+            <h3><%= job.jobTitle %></h3>
+            <p><strong>Company:</strong> <%= job.Company.companyName %></p>
+            <p><strong>Location:</strong> <%= job.location || 'N/A' %></p>
+            <p><strong>Type:</strong> <%= job.jobType || 'N/A' %></p>
+            <p><strong>Salary:</strong> $<%= job.salary || 'N/A' %></p>
+            <p><strong>Description:</strong> <%= job.jobDescription || 'N/A' %></p>
+            <p><strong>Posting Date:</strong> <%= job.postingDate ? job.postingDate.toDateString() : 'N/A' %></p>
+            <p><strong>Expiry Date:</strong> <%= job.expiryDate ? job.expiryDate.toDateString() : 'N/A' %></p>
+            <form action="/apply/<%= job.id %>" method="POST">
+              <br>
+              <button type="submit">Apply</button>
+            </form>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <!-- Applications Section --> 
+    <div id="job-listings" class="section">
+      <h2>Your Applications</h2>
+      <div class="job-list">
+        <% jobs.forEach(job => { %>
+          <% if (appliedJobs[job.id]) { %> <!-- Only show jobs the user has applied for -->
+            <div class="job-item">
+             
+              <p><strong>Job-Position:</strong> <%= job.jobTitle %></p>
+              <p><strong>Company:</strong> <%= job.Company.companyName %></p>
+              <p><strong>Location:</strong> <%= job.location || 'N/A' %></p>
+              <p><strong>Type:</strong> <%= job.jobType || 'N/A' %></p>
+              <p><strong>Salary:</strong> $<%= job.salary || 'N/A' %></p>
+              
+               
+              <!-- Highlight application status -->
+              <p>
+                <strong>Application Status:</strong> 
+                <div class="<%=appliedJobs[job.id]%>">
+                  <%=appliedJobs[job.id]%>
+                </div>
+                
+              </p>
+            </div>
+          <% } %>
+        <% }) %>
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+</body>
+</html>

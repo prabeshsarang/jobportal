@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Next Step Workforce Solutions</title>
+<style>
+  /* Base styling */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body, html {
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: url('9019808.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Navbar with Maroon Gradient */
+  nav {
+    width: 100%;
+    padding: 15px 30px;
+    background: linear-gradient(to right, #800000, #a93226); /* Maroon gradient */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  nav h1 {
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    font-weight: bold;
+  }
+
+  nav ul {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+  }
+
+  nav ul li {
+    font-size: 1.1rem;
+  }
+
+  nav ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  nav ul li a:hover {
+    color: #ffcccb;
+  }
+
+  /* Main Container Styling */
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    text-align: center;
+    color: #f8eaea;
+    margin-top: 100px;
+    animation: fadeIn 1.5s ease-in-out;
+    padding: 0 20px;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .footer {
+    margin-top: 2rem;
+    font-size: 0.95rem;
+    color: #f5b7b1;
+    animation: fadeIn 3s ease-in-out;
+  }
+
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @media (max-width: 600px) {
+    nav {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    nav h1 {
+      font-size: 1.4rem;
+    }
+
+    nav ul {
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      flex-direction: column;
+    }
+  }
+</style>
+
+
+</head>
+<body>
+ 
+  <nav>
+    <h1>Job Portal</h1>
+    <ul>
+      <li><a href="/login" class="button">Login</a></li>
+      <li><a href="/register" class="button">Register</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h1>Welcome To Flex Solutions</h1>
+    
+    <!-- Footer -->
+    <div class="footer">
+      &copy; 2024 Next Step Workforce Solutions. All rights reserved.
+    </div>
+  </div>
+
+</body>
+</html>

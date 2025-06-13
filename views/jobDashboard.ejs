@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Jobs for <%= company.companyName %></title>
+<style>
+/* General Reset and Layout */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body, html {
+    height: 100%;
+    background-color: #fbecec; /* light pinkish maroon bg */
+    color: #800000;
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+}
+
+/* Navbar Styling */
+nav {
+    background: #800000;
+    width: 100%;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+nav .title {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+nav ul {
+    display: flex;
+    list-style-type: none;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: background 0.3s, padding 0.3s;
+}
+
+nav ul li a:hover {
+    background: #990000;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+
+/* Main Content Area */
+.main-content {
+    margin-top: 90px;
+    padding: 2rem;
+    flex-grow: 1;
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+
+/* Headings */
+h1 {
+    font-size: 2.5rem;
+    color: #800000;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+h2 {
+    font-size: 2rem;
+    color: #990000;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Sections */
+.section, #createJobForm, #jobListings, #jobApplications {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(128, 0, 0, 0.1);
+    margin: 1rem auto;
+    max-width: 1000px;
+}
+
+/* Form Fields */
+#createJobForm label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #800000;
+}
+
+#createJobForm input, 
+#createJobForm textarea, 
+#createJobForm select {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #800000;
+    background: #f9f9f9;
+}
+
+#createJobForm input:focus, 
+#createJobForm textarea:focus, 
+#createJobForm select:focus {
+    border-color: #990000;
+    background: #fff;
+    outline: none;
+}
+
+#createJobForm textarea {
+    resize: vertical;
+    height: 150px;
+}
+
+/* Submit Button */
+#createJobForm button {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(135deg, #800000, #990000);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    width: 100%;
+    box-shadow: 0px 4px 12px rgba(128, 0, 0, 0.3);
+}
+
+#createJobForm button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #990000, #800000);
+}
+
+/* Job Listings */
+.job-card {
+    background: #fff5f5;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    border: 2px solid #990000;
+    box-shadow: 0 4px 8px rgba(128, 0, 0, 0.08);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.job-card::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border: 1px solid #800000;
+    border-radius: 8px;
+}
+
+.job-card h3 {
+    font-size: 1.8rem;
+    color: #800000;
+    margin-bottom: 1rem;
+}
+
+.job-card h3:hover {
+    color: #b84c4c;
+}
+
+.job-card p {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 0.8rem;
+}
+
+/* Hover Effect */
+.job-card:hover {
+    box-shadow: 0 6px 15px rgba(128, 0, 0, 0.15);
+    transform: translateY(-5px);
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #800000;
+    color: white;
+    text-transform: uppercase;
+}
+
+tr:hover {
+    background-color: #fceaea;
+}
+
+td a {
+    color: #990000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+td a:hover {
+    color: #b84c4c;
+}
+
+/* Action Buttons */
+button {
+    padding: 0.5rem 1.2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    margin: 0.2rem;
+}
+
+/* Approve */
+button.approve {
+    background-color: #28a745;
+    color: white;
+}
+button.approve:hover {
+    background-color: #218838;
+}
+
+/* Reject */
+button.reject {
+    background-color: #ffc107;
+    color: white;
+}
+button.reject:hover {
+    background-color: #e0a800;
+}
+
+/* Delete */
+button.delete {
+    background-color: #dc3545;
+    color: white;
+}
+button.delete:hover {
+    background-color: #bd2130;
+}
+
+/* Messages */
+#jobApplications p {
+    text-align: center;
+    color: #800000;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #jobListings, #jobApplications, #createJobForm {
+        padding: 1rem;
+    }
+
+    .job-card {
+        padding: 1rem;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+
+    th, td {
+        padding: 8px 10px;
+    }
+
+    button {
+        padding: 0.4rem 1rem;
+    }
+}
+
+/* Top Spacing for Fixed Navbar */
+#jobListings, #createJobForm, #jobApplications {
+    margin-top: 90px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+</style>
+
+
+</head>
+<body>
+    <div class="container">
+        <!-- Navbar -->
+        <nav>
+            <div class="title">Job Dashboard</div>
+            <ul>
+                <li><a href="#createJobForm">Create New Job</a></li>
+                <li><a href="#jobListings">View Job Listings</a></li>
+                <li><a href="#jobApplications">View/Manage Applications</a></li>
+                <li><a href="/employer/dashboard">Go Back</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="content">
+            <!-- Create Job Form Section -->
+            <section id="createJobForm" class="section">
+                <h2>Create New Job</h2>
+                <form action="/company/<%= company.companyId %>/jobs/create" method="POST">
+                    <label for="jobTitle">Job Title:</label>
+                    <input type="text" id="jobTitle" name="jobTitle" required>
+
+                    <label for="jobDescription">Job Description:</label>
+                    <textarea id="jobDescription" name="jobDescription"></textarea>
+
+                    <label for="salary">Salary:</label>
+                    <input type="number" id="salary" name="salary" required>
+
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" name="location" required>
+
+                    <label for="jobType">Job Type:</label>
+                    <select id="jobType" name="jobType" required>
+                        <option value="Full-time">Full-time</option>
+                        <option value="Part-time">Part-time</option>
+                    </select>
+
+                    <label for="postingDate">Posting Date:</label>
+                    <input type="date" id="postingDate" name="postingDate" required>
+
+                    <label for="expiryDate">Expiry Date:</label>
+                    <input type="date" id="expiryDate" name="expiryDate" required>
+
+                    <button type="submit">Create Job</button>
+                </form>
+            </section>
+
+            <!-- Job Listings Section -->
+            <section id="jobListings" class="section">
+                <h2> Job Listings</h2>
+                <% if (jobs && jobs.length > 0) { %>
+                    <% jobs.forEach(job => { %>
+                        <div class="job-card">
+                            <h3><%= job.jobTitle %></h3>
+                            <p><strong>Description:</strong> <%= job.jobDescription %></p>
+                            <p><strong>Salary:</strong> <%= job.salary %></p>
+                            <p><strong>Location:</strong> <%= job.location %></p>
+                            <p><strong>Type:</strong> <%= job.jobType %></p>
+                            <p><strong>Posting Date:</strong> <%= job.postingDate.toISOString().split('T')[0] %></p>
+                            <p><strong>Expiry Date:</strong> <%= job.expiryDate.toISOString().split('T')[0] %></p>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <p>No jobs found for this company.</p>
+                <% } %>
+            </section>
+
+            <!-- Job Applications Section -->
+            <section id="jobApplications" class="section">
+                <h2>Manage Applications</h2>
+                <% if (applications && applications.length > 0) { %>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Applicant Name</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Resume</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% applications.forEach(application => { %>
+                                <tr>
+                                    <td><%= application.User.name %></td>
+                                    <td><%= application.User.email %></td>
+                                    <td><%= application.status %></td>
+                                    <td>
+                                        <% if (application.User.validDocument) { %>
+                                            <a href="/<%= application.User.validDocument %>" target="_blank">View Resume</a>
+                                        <% } else { %>
+                                            N/A
+                                        <% } %>
+                                    </td>
+                                    <td>
+                                        <form action="/applications/<%= application.id %>/approve" method="POST" style="display:inline;">
+                                            <button type="submit" class="approve" style=" background: #1fbd00;">Approve</button>
+                                        </form>
+                                        <form action="/applications/<%= application.id %>/reject" method="POST" style="display:inline;">
+                                            <button type="submit" class="reject" style="color:red;background: #e0e0e0;" >Reject</button>
+                                        </form>
+                                        <form action="/applications/<%= application.id %>/delete" method="POST" style="display:inline;">
+                                            <button type="submit" class="delete" style=" background: #bd0000;" >Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                <% } else { %>
+                    <p>No applications available for this job.</p>
+                <% } %>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
